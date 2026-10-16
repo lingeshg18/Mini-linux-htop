@@ -316,8 +316,7 @@ void display_processes(){
 int main() {
     get_total_memory();
     get_process_info();
-
-    printf("Processes detected: %d\n", num_processes);
+    display_processes();
     return 0;
 }
 
