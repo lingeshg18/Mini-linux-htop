@@ -174,6 +174,70 @@ void get_total_memory(){
     fclose(fp);
 }
 
+float get_system_cpu_usage() {
+    static unsigned long long prev_total = 0;
+    static unsigned long long prev_idle = 0;
+
+    FILE *fp = fopen("/proc/stat", "r");
+    if (fp == NULL)
+        return 0.0f;
+
+    unsigned long long user, nice, system, idle;
+    unsigned long long iowait, irq, softirq, steal;
+
+    if (fscanf(fp, "cpu %llu %llu %llu %llu %llu %llu %llu %llu",
+               &user, &nice, &system, &idle,
+               &iowait, &irq, &softirq, &steal) != 8) {
+        fclose(fp);
+        return 0.0f;
+    }
+
+    fclose(fp);
+
+    unsigned long long total = user + nice + system + idle
+                             + iowait + irq + softirq + steal;
+    unsigned long long idle_total = idle + iowait;
+
+    float usage = 0.0f;
+
+    if (prev_total != 0 && total > prev_total) {
+        unsigned long long total_diff = total - prev_total;
+        unsigned long long idle_diff = idle_total - prev_idle;
+
+        usage = 100.0f * (1.0f - (float)idle_diff / total_diff);
+    }
+
+    prev_total = total;
+    prev_idle = idle_total;
+
+    return usage;
+}
+
+float get_system_memory_usage() {
+    FILE *fp = fopen("/proc/meminfo", "r");
+    if (fp == NULL)
+        return 0.0f;
+
+    long total = 0;
+    long available = 0;
+    char line[256];
+
+    while (fgets(line, sizeof(line), fp)) {
+        if (sscanf(line, "MemTotal: %ld kB", &total) == 1)
+            continue;
+
+        if (sscanf(line, "MemAvailable: %ld kB", &available) == 1)
+            break;
+    }
+
+    fclose(fp);
+
+    if (total <= 0)
+        return 0.0f;
+
+    return 100.0f * (total - available) / total;
+}
+
 void get_process_info(){
     DIR *dir=opendir("/proc");
     struct dirent *entry;
