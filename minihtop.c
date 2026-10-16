@@ -391,8 +391,13 @@ void display_processes(){
         mvprintw(7, 5, "CPU Usage: %.1f%%    Memory Usage: %.1f%%",
                  cpu_usage, memory_usage);
         attroff(COLOR_PAIR(6) | A_BOLD);
+        
+        attron(COLOR_PAIR(6) | A_BOLD);
+        mvprintw(9, 5, "Controls: [Q] Quit  [C] Sort by CPU  [M] Sort by Memory  [P] Sort by PID");
+        attroff(COLOR_PAIR(6) | A_BOLD);
+
         attron(COLOR_PAIR(8));
-        mvprintw(9,0,"%-6s %-10s %-6s %-6s %-s","PID","USER","CPU%","MEM%","COMMAND");
+        mvprintw(11,0,"%-6s %-10s %-6s %-6s %-s","PID","USER","CPU%","MEM%","COMMAND");
         attron(COLOR_PAIR(8));
         
         for(int i=0;i<num_processes;i++){
@@ -402,7 +407,7 @@ void display_processes(){
             else if (processes[i].cpu_percent >= 0.50)
                 color_pair = 6; // Yellow
            attron(COLOR_PAIR(color_pair));
-           mvprintw(i + 10, 0, "%-6d %-10s %-6.2f %-6.2f %-50.50s",
+           mvprintw(i + 12, 0, "%-6d %-10s %-6.2f %-6.2f %-50.50s",
             processes[i].pid,
             processes[i].user,
             processes[i].cpu_percent,
