@@ -288,6 +288,7 @@ void display_processes(){
         init_pair(5, COLOR_CYAN, -1);
         init_pair(6, COLOR_GREEN, -1);
         init_pair(7, COLOR_MAGENTA, -1);
+        init_pair(8, COLOR_YELLOW, -1);
     }
     noecho();
     curs_set(FALSE);
@@ -296,7 +297,9 @@ void display_processes(){
 
     while(1){
         clear();
+        attron(COLOR_PAIR(8));
         mvprintw(0,0,"%-6s %-10s %-6s %-6s %-s","PID","USER","CPU%","MEM%","COMMAND");
+        attron(COLOR_PAIR(8));
         mvprintw(1, 0, "DEBUG: num_processes = %d", num_processes);
 
         for(int i=0;i<num_processes;i++){
