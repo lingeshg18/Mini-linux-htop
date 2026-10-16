@@ -313,11 +313,11 @@ void display_processes(){
     }
     endwin();
 }
-int main(){
-    
+int main() {
     get_total_memory();
     get_process_info();
-    display_processes();
+
+    printf("Processes detected: %d\n", num_processes);
     return 0;
 }
 
