@@ -297,7 +297,7 @@ void display_processes(){
         clear();
         project_banner();
         attron(COLOR_PAIR(8));
-        mvprintw(0,0,"%-6s %-10s %-6s %-6s %-s","PID","USER","CPU%","MEM%","COMMAND");
+        mvprintw(9,0,"%-6s %-10s %-6s %-6s %-s","PID","USER","CPU%","MEM%","COMMAND");
         attron(COLOR_PAIR(8));
         
         for(int i=0;i<num_processes;i++){
