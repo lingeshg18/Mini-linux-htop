@@ -13,7 +13,7 @@ A lightweight, colorful, terminal-based Linux process monitor built in **C using
 - **Automatic refresh** every second to keep system and process information updated.
 
 ## Preview
-
+![Mini Linux htop running in the terminal](minihtop.png)
 Mini Linux htop displays the banner, system summary, keyboard controls, and process table together in one terminal screen.
 
 ## Tech Stack
