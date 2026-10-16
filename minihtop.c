@@ -281,11 +281,17 @@ void get_process_info(){
 
 void display_processes(){
     initscr();
+    if (has_colors()) {
+        start_color();
+        use_default_colors();
+
+        init_pair(5, COLOR_CYAN, -1);
+        init_pair(6, COLOR_GREEN, -1);
+        init_pair(7, COLOR_MAGENTA, -1);
+    }
     noecho();
     curs_set(FALSE);
-
     project_banner();
-    
     getch();
 
     while(1){
