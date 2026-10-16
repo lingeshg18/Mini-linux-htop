@@ -341,10 +341,35 @@ void get_process_info(){
     closedir(dir);
     prev_total_cpu_time=total_cpu_time_now;
 }
+
+
+int sort_mode = 0;  // 0 = PID, 1 = CPU, 2 = Memory
+
+int compare_processes(const void *a, const void *b) {
+    const processinfo *p1 = (const processinfo *)a;
+    const processinfo *p2 = (const processinfo *)b;
+
+    if (sort_mode == 1) {
+        if (p1->cpu_percent < p2->cpu_percent) return 1;
+        if (p1->cpu_percent > p2->cpu_percent) return -1;
+    } else if (sort_mode == 2) {
+        if (p1->mem_percent < p2->mem_percent) return 1;
+        if (p1->mem_percent > p2->mem_percent) return -1;
+    }
+
+    if (p1->pid < p2->pid) return -1;
+    if (p1->pid > p2->pid) return 1;
+    return 0;
+}
+
 // Displaying processes
 
 void display_processes(){
     initscr();
+    cbreak();
+    noecho();
+    keypad(stdscr, TRUE);
+    timeout(1000);
     if (has_colors()) {
         start_color();
         use_default_colors();
@@ -354,7 +379,6 @@ void display_processes(){
         init_pair(7, COLOR_MAGENTA, -1);
         init_pair(8, COLOR_YELLOW, -1);
     }
-    noecho();
     curs_set(FALSE);
 
     while(1){
@@ -386,9 +410,25 @@ void display_processes(){
             processes[i].command);
             attroff(COLOR_PAIR(color_pair));
         }
+        
         refresh();
-        sleep(1);
+        
+        int ch = getch();
+        
+        if (ch == 'q' || ch == 'Q') {
+            break;
+        } else if (ch == 'c' || ch == 'C') {
+            sort_mode = 1;
+        } else if (ch == 'm' || ch == 'M') {
+            sort_mode = 2;
+        } else if (ch == 'p' || ch == 'P') {
+            sort_mode = 0;
+        }
+        
         get_process_info();
+        qsort(processes, num_processes, sizeof(processinfo),
+              compare_processes);
+
     }
     endwin();
 }
