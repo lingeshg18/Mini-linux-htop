@@ -292,11 +292,9 @@ void display_processes(){
     }
     noecho();
     curs_set(FALSE);
-    project_banner();
-    getch();
 
     while(1){
-        clear();
+        project_banner();
         attron(COLOR_PAIR(8));
         mvprintw(0,0,"%-6s %-10s %-6s %-6s %-s","PID","USER","CPU%","MEM%","COMMAND");
         attron(COLOR_PAIR(8));
@@ -309,7 +307,7 @@ void display_processes(){
             else if (processes[i].cpu_percent >= 0.50)
                 color_pair = 6; // Yellow
            attron(COLOR_PAIR(color_pair));
-           mvprintw(i + 1, 0, "%-6d %-10s %-6.2f %-6.2f %-50.50s",
+           mvprintw(i + 9, 0, "%-6d %-10s %-6.2f %-6.2f %-50.50s",
             processes[i].pid,
             processes[i].user,
             processes[i].cpu_percent,
