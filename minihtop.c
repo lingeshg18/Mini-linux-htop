@@ -232,11 +232,12 @@ void get_process_info(){
     if(fp) {
         size_t len = fread(processes[num_processes].command,1,sizeof(processes[num_processes].command) - 1 ,fp);
         fclose(fp);
-        for(size_t j=0;j<len-1;j++){
-            if(processes[num_processes].command[j]='\0'){
-                processes[num_processes].command[j]=' ';
+        for (size_t j = 0; j < len; j++) {
+            if (processes[num_processes].command[j] == '\0') {
+                processes[num_processes].command[j] = ' ';
             }
         }
+        processes[num_processes].command[len] = '\0';
     }
     // Fallback to comm if cmdline is empty
     if(strlen(processes[num_processes].command) < 2){
