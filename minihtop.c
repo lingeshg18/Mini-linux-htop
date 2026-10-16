@@ -300,7 +300,7 @@ void display_processes(){
            color_pair = 6; //Gives yellow
            
            attron(COLOR_PAIR(color_pair));
-           mvprintw(i + 1, 0, "%-6d %-10s %-6.2f %-6.2f %-0.50s",
+           mvprintw(i + 1, 0, "%-6d %-10s %-6.2f %-6.2f %-50.50s",
             processes[i].pid,
             processes[i].user,
             processes[i].cpu_percent,
