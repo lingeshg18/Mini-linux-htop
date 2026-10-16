@@ -360,6 +360,13 @@ void display_processes(){
     while(1){
         clear();
         project_banner();
+        float cpu_usage = get_system_cpu_usage();
+        float memory_usage = get_system_memory_usage();
+        
+        attron(COLOR_PAIR(6) | A_BOLD);
+        mvprintw(7, 5, "CPU Usage: %.1f%%    Memory Usage: %.1f%%",
+                 cpu_usage, memory_usage);
+        attroff(COLOR_PAIR(6) | A_BOLD);
         attron(COLOR_PAIR(8));
         mvprintw(9,0,"%-6s %-10s %-6s %-6s %-s","PID","USER","CPU%","MEM%","COMMAND");
         attron(COLOR_PAIR(8));
