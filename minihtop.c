@@ -294,12 +294,12 @@ void display_processes(){
     curs_set(FALSE);
 
     while(1){
+        clear();
         project_banner();
         attron(COLOR_PAIR(8));
         mvprintw(0,0,"%-6s %-10s %-6s %-6s %-s","PID","USER","CPU%","MEM%","COMMAND");
         attron(COLOR_PAIR(8));
-        mvprintw(1, 0, "DEBUG: num_processes = %d", num_processes);
-
+        
         for(int i=0;i<num_processes;i++){
            int color_pair = 5; // Gives green
             if (processes[i].cpu_percent >= 1.0)
