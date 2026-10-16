@@ -291,6 +291,7 @@ void display_processes(){
     while(1){
         clear();
         mvprintw(0,0,"%-6s %-10s %-6s %-6s %-s","PID","USER","CPU%","MEM%","COMMAND");
+        mvprintw(1, 0, "DEBUG: num_processes = %d", num_processes);
 
         for(int i=0;i<num_processes;i++){
            int color_pair = 5; // Gives green
