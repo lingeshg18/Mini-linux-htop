@@ -1,112 +1,119 @@
 # Mini Linux htop
 
-A lightweight, terminal-based Linux process monitor written in **C** using the **ncurses** library. The project displays running processes and selected system resource metrics in a colorful, continuously refreshed terminal interface.
+A lightweight, colorful, terminal-based Linux process monitor built in **C using ncurses**. Mini Linux htop displays running processes alongside system CPU and memory usage, with interactive keyboard shortcuts for sorting and navigation.
 
 ## Features
 
-- Displays process IDs (PID) and usernames.
-- Shows CPU usage and memory usage percentages for processes.
-- Displays process command information.
-- Refreshes process information approximately every second.
-- Uses ncurses for terminal-based rendering and colors.
-- Reads process and system information from the Linux `/proc` filesystem.
+- **Colorful ASCII banner** for a distinctive terminal interface.
+- **Live system monitoring** with CPU and memory usage summaries.
+- **Process monitoring** displaying PID, username, CPU usage, memory usage, and command.
+- **Color-coded interface** with cyan process rows, yellow table headers, and colored CPU usage highlights.
+- **Interactive sorting** by CPU usage, memory usage, or PID.
+- **Keyboard shortcuts** displayed directly in the interface for easy use.
+- **Automatic refresh** every second to keep system and process information updated.
+
+## Preview
+
+Mini Linux htop displays the banner, system summary, keyboard controls, and process table together in one terminal screen.
 
 ## Tech Stack
 
 - **Language:** C
 - **Terminal UI:** ncurses
-- **Operating System:** Linux
-- **System interfaces:** `/proc` filesystem and POSIX system calls
+- **System information:** Linux `/proc` filesystem
+- **Development environment:** Linux / Ubuntu / WSL2
+- **Compiler:** GCC
 
-## Preview
+## Requirements
 
-<!-- Add a screenshot after saving it to the screenshots/ directory. -->
-<!-- ![Mini Linux htop running in a terminal](screenshots/minihtop.png) -->
-
-## Prerequisites
-
-You need:
-- A Linux environment
-- GCC or another compatible C compiler
-- The ncurses development library
-- A terminal that supports ncurses
-
-### Install dependencies
-
-**Ubuntu / Debian**
-```bash
-sudo apt update
-sudo apt install build-essential libncurses-dev
-```
-
-**Fedora**
-```bash
-sudo dnf install gcc make ncurses-devel
-```
-
-**Arch Linux**
-```bash
-sudo pacman -S --needed base-devel ncurses
-```
+- A Linux environment, including Ubuntu on WSL2.
+- GCC compiler.
+- ncurses development library.
 
 ## Installation and Usage
 
-Clone the repository:
+### 1. Install dependencies
+
+On Ubuntu or WSL2 Ubuntu, run:
+
+```bash
+sudo apt update
+sudo apt install build-essential libncurses-dev git
+```
+
+### 2. Clone the repository
 
 ```bash
 git clone https://github.com/lingeshg18/Mini-linux-htop.git
 cd Mini-linux-htop
 ```
 
-Compile the program:
+### 3. Compile the program
 
 ```bash
 gcc -Wall -Wextra minihtop.c -o minihtop -lncurses
 ```
 
-Run it:
+### 4. Run the monitor
 
 ```bash
 ./minihtop
 ```
 
-Use `Ctrl+C` to stop the program.
+## Keyboard Shortcuts
+
+| Key | Action |
+|---|---|
+| `q` | Quit the application |
+| `c` | Sort processes by CPU usage, highest first |
+| `m` | Sort processes by memory usage, highest first |
+| `p` | Sort processes by PID, lowest first |
+
+The available shortcuts are also displayed in the terminal interface.
 
 ## How It Works
 
-1. Reads system CPU statistics from `/proc/stat`.
-2. Reads process information from `/proc`, including process status, memory information, and command details.
-3. Calculates CPU usage from changes in CPU-time counters.
-4. Estimates process memory usage using resident-memory information and total system memory.
-5. Renders the process information in the terminal using ncurses and refreshes it periodically.
+Mini Linux htop reads system and process information from Linux's `/proc` filesystem.
+
+- **System CPU usage:** Calculated from CPU counters in `/proc/stat` across successive readings.
+- **System memory usage:** Calculated using memory information from `/proc/meminfo`.
+- **Process information:** Collected from process-specific entries such as `/proc/[pid]/stat`, `/proc/[pid]/status`, `/proc/[pid]/statm`, and `/proc/[pid]/cmdline`.
+- **Terminal interface:** ncurses handles screen rendering, colors, keyboard input, and periodic updates.
+- **Sorting:** The C standard library's `qsort()` function orders processes according to the selected sorting mode.
+
+## Project Structure
+
+```text
+Mini-linux-htop/
+├── minihtop.c    # Main application and process monitoring
+├── banner.c      # Banner source, if retained in the repository
+└── README.md     # Project documentation
+```
+
+The exact source-file structure may vary depending on the current repository version.
 
 ## Platform Compatibility
 
-This version is designed for **Linux systems** with a compatible `/proc` filesystem and ncurses development libraries.
+The application is designed for Linux environments that expose the `/proc` filesystem and support ncurses.
 
-It is not currently a universal Windows/macOS application. Supporting other operating systems would require platform-specific process-monitoring implementations.
+It can be compiled and run on Ubuntu and Ubuntu under WSL2. It is not a native Windows application.
 
-## Limitations
-
-- The current implementation stores information for a maximum of 1,024 processes.
-- Process visibility depends on operating-system permissions and process availability.
-- CPU and memory readings should be treated as estimates and validated against established monitoring tools.
-- Terminal dimensions and character support may affect the display.
+System resource readings in WSL2 reflect the Linux environment visible to WSL and may differ from Windows Task Manager.
 
 ## Future Improvements
 
-- Add sorting and filtering by CPU and memory usage.
-- Implement keyboard controls and graceful shutdown.
-- Improve CPU and memory calculation accuracy.
-- Add a Makefile and automated build checks.
-- Add screenshots and tested release binaries.
+- Process filtering and searching.
+- Improved handling of terminal resizing and narrow screens.
+- More robust process sorting and display.
+- Additional system statistics and monitoring features.
 
 ## Author
 
 **Lingesh Kumar G**
 
-- GitHub: [@lingeshg18](https://github.com/lingeshg18)
+GitHub: [@lingeshg18](https://github.com/lingeshg18)
 
-## License
+---
 
-No license has been specified yet. Add a license file if you intend to define the terms under which others can use, modify, or distribute this project.
+If you find this project useful, consider giving the repository a star!
+
