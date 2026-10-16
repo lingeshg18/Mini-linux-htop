@@ -86,7 +86,6 @@ Mini Linux htop reads system and process information from Linux's `/proc` filesy
 ```text
 Mini-linux-htop/
 ├── minihtop.c    # Main application and process monitoring
-├── banner.c      # Banner source, if retained in the repository
 └── README.md     # Project documentation
 ```
 
