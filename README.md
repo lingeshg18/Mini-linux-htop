@@ -1,4 +1,3 @@
-# Mini-linux-htop
 # Mini Linux htop
 
 A lightweight, terminal-based Linux process monitor written in **C** using the **ncurses** library. The project displays running processes and selected system resource metrics in a colorful, continuously refreshed terminal interface.
